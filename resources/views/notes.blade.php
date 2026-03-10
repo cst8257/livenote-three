@@ -11,10 +11,10 @@
         <h1 class="text-5xl font-weight-normal mb-4">Notes</h1>
 
         <section class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-start py-4">
-            @foreach ($notes as $index => $note)
-            <a href="/note/{{ $index }}" class="block border border-gray-300 p-4 min-h-30 rounded-xl">
+            @foreach ($notes as $note)
+            <a href="/note/{{ $note['id'] }}" class="block border border-gray-300 p-4 min-h-30 rounded-xl">
                 <h2 class="text-xl font-weight-normal mb-2">{{ $note['title'] }}</h2>
-                <p class="text-sm text-zinc-500">{{ $note['content'] }}</p>
+                <p class="text-sm text-zinc-500">{{ Str::of($note['content'])->limit(75) }}</p>
             </a>
             @endforeach
         </section>
