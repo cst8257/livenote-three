@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-    public $notes = [
-        ['title' => 'Note 1', 'content' => 'This is note 1.'],
-        ['title' => 'Note 2', 'content' => 'This is note 2.']
-    ];
-
     public function index()
     {
-        return view('notes', ['notes' => $this->notes]);
+        $notes = Note::all();
+        return view('notes', ['notes' => $notes]);
     }
 
-    public function show($index)
+    public function show($id)
     {
-        return view('note', $this->notes[$index]);
+        $note = Note::findOrFail($id);
+        return view('note', $note);
     }
 }

@@ -15,11 +15,8 @@ Part 2 will introduce Blade layouts and components for improved reusability and 
 ### Part 3: Livewire and Flux Components
 Part 3 will introduce Livewire single file components and pages, which will be necessary for make the site more reactive. We will also look at FluxUI component library.
 
-### Part 4: Actions, Data Binding, and Navigation
+### Part 4: Actions, Data Binding, and Data Manipulation
 Part 4 will add reactivity using the Livewire components and pages. 
 
-### Part 5: Data Manipulation
-Part 5 will introduce database manipulation and relationships allowing for the retrieval of data across multiple database tables.
-
-### Part 6: Authentication and Validation
-Part 6 will introduce Laravel authentication and validation. The ability to login and logout will be added to the web application. 
+### Part 5: Authentication and Validation
+Part 5 will introduce Laravel authentication and validation. The ability to login and logout will be added to the web application. 
