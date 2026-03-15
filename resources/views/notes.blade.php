@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-    <section class="p-8 max-w-7xl">
-        <h1 class="text-5xl font-weight-normal mb-4">Notes</h1>
+<x-layout>
+    <x-elements.title>Notes</x-elements.title>
 
-        <section class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-start py-4">
-            @foreach ($notes as $note)
-            <a href="/note/{{ $note['id'] }}" class="block border border-gray-300 p-4 min-h-30 rounded-xl">
-                <h2 class="text-xl font-weight-normal mb-2">{{ $note['title'] }}</h2>
-                <p class="text-sm text-zinc-500">{{ Str::of($note['content'])->limit(75) }}</p>
-            </a>
-            @endforeach
-        </section>
-    </section>
-</body>
-</html>
+    <x-layout.grid>
+        @foreach ($notes as $note)
+        <x-elements.card :id="$note['id']" :title="$note['title']" :content="$note['content']" />
+        @endforeach
+    </x-layout.grid>
+</x-layout>
