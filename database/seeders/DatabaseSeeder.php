@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Note;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +32,21 @@ class DatabaseSeeder extends Seeder
         Note::create(['title' => 'Book Recommendations', 'content' => 'Read "1984" by George Orwell and "Dune" by Frank Herbert.']);
         
         Note::factory(10)->create();
+
+        Tag::create(['name' => 'Personal']);
+        Tag::create(['name' => 'Work']);
+        Tag::create(['name' => 'Shopping']);
+        Tag::create(['name' => 'Fitness']);
+
+        DB::table('note_tag')->insert([
+            ['note_id' => 1, 'tag_id' => 2],
+            ['note_id' => 2, 'tag_id' => 1],
+            ['note_id' => 2, 'tag_id' => 3],
+            ['note_id' => 3, 'tag_id' => 1],
+            ['note_id' => 3, 'tag_id' => 4],
+            ['note_id' => 4, 'tag_id' => 1],
+            ['note_id' => 5, 'tag_id' => 2],
+            ['note_id' => 6, 'tag_id' => 1],
+        ]);
     }
 }

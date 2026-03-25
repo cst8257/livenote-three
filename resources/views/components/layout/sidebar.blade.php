@@ -5,5 +5,6 @@
         logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png"
         name="Livenote 3"
     />
+    {{ $slot }}
     <flux:sidebar.spacer />
 </flux:sidebar>

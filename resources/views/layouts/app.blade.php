@@ -10,10 +10,12 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800 antialiased">
     <div class="flex">
-        <x-layout.sidebar />
+        <x-layout.sidebar>
+            {{ $sidenav }}
+        </x-layout.sidebar>
         <main class="grow">
             {{ $slot }}
-            <x-layout.modal />
+            <livewire:layout.modal />
         </main>
     </div>
 

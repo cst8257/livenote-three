@@ -31,6 +31,9 @@ new class extends Component
                 placeholder="Search..."
                 wire:model.live="search" />
     </x-layout.header>
+    <x-slot name="sidenav">
+        <livewire:layout.sidenav />
+    </x-slot>
     <x-layout.container>
         <x-elements.title>Notes</x-elements.title>
 
