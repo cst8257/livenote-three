@@ -5,5 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [NoteController::class, 'index']);
 Route::livewire('/', 'pages::notes');
+Route::livewire('/tag/{tagId}', 'pages::notes');
 // Route::get('/note/{id}', [NoteController::class, 'show']);
 Route::livewire('/note/{id}', 'pages::note');

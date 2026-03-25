@@ -1,16 +1,26 @@
 <?php
 
 use App\Models\Note;
+use App\Models\Tag;
 use Livewire\Component;
 
 new class extends Component
 {
     public $notes = [];
     public $search = '';
+    public $title = '';
 
-    public function mount()
+    public function mount($tagId = null)
     {
-        $this->notes = Note::all();
+        if (is_null($tagId)) {
+            $this->notes = Note::all();
+            $this->title = 'All Notes';
+            return;
+        }
+
+        $tag = Tag::findOrFail($tagId);
+        $this->title = $tag->name;
+        $this->notes = $tag->notes;
     }
 
     public function updatedSearch()
@@ -23,6 +33,7 @@ new class extends Component
 ?>
 
 <div>
+    <x-slot name="title">{{ $title }}</x-slot>
     <x-layout.header>
         <flux:input
                 icon="magnifying-glass"
@@ -35,7 +46,7 @@ new class extends Component
         <livewire:layout.sidenav />
     </x-slot>
     <x-layout.container>
-        <x-elements.title>Notes</x-elements.title>
+        <x-elements.title>{{ $title }}</x-elements.title>
 
         <x-layout.grid>
             @foreach ($notes as $note)

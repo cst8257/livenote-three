@@ -16,6 +16,24 @@ new class extends Component
        $this->title = $note->title;
        $this->content = $note->content;
     }
+
+    public function updated()
+    {
+        $note = Note::findOrFail($this->id);
+        $note->title = $this->title;
+        $note->content = $this->content;
+        $note->save();
+
+        $this->js('save');
+    }
+
+    public function delete()
+    {
+        $note = Note::findOrFail($this->id);
+        $note->delete();
+
+        $this->redirect('/', true);
+    }
 };
 ?>
 
@@ -25,7 +43,9 @@ new class extends Component
         <flux:button href="/" class="me-4" wire:navigate>Back</flux:button>
         <flux:button 
             variant="danger" 
-            class="cursor-pointer">
+            class="cursor-pointer"
+            wire:click="delete"
+            wire:confirm="Are you sure you want to delete this note?">
                 Delete
         </flux:button>
     </x-layout.header>
@@ -34,10 +54,10 @@ new class extends Component
     </x-slot>
     <x-layout.container>
         <input 
-            wire:model="title" 
+            wire:model.blur.live="title" 
             class="text-5xl font-weight-normal p-4 mb-4 w-full">
         <textarea 
-            wire:model="content" 
+            wire:model.blur.live="content" 
             class="text-2xl p-4 w-full h-50"></textarea>
 
         <livewire:elements.toast />
