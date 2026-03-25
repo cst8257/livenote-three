@@ -1,5 +1,5 @@
 <flux:modal name="new-note" class="md:w-96">
-    <form class="space-y-6" wire:submit="save">
+    <form class="space-y-6">
         <flux:heading size="lg">New Note</flux:heading>
         <flux:input placeholder="New title..." />
         <flux:textarea placeholder="New content..." />
