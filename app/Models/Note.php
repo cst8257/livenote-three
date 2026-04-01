@@ -9,4 +9,9 @@ class Note extends Model
 {
     /** @use HasFactory<\Database\Factories\NoteFactory> */
     use HasFactory;
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

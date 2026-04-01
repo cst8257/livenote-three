@@ -1,13 +1,16 @@
 <?php
 
 use App\Models\Note;
+use App\Models\Tag;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-new class extends Component
+new #[Layout('layouts::dashboard')] class extends Component
 {
     public $id;
     public $title = '';
     public $content = '';
+    public $tags = '';
 
     public function mount($id) 
     {
@@ -15,6 +18,7 @@ new class extends Component
        $this->id = $note->id;
        $this->title = $note->title;
        $this->content = $note->content;
+       $this->tags = Tag::stringify($note->tags);
     }
 
     public function updated()
@@ -59,7 +63,9 @@ new class extends Component
         <textarea 
             wire:model.blur.live="content" 
             class="text-2xl p-4 w-full h-50"></textarea>
-
+        <input
+            wire:model.blur.live="tags"
+            class="text-2xl font-weight-normal p-4 mb-4 w-full text-yellow-500">
         <livewire:elements.toast />
     </x-layout.container>
 </div>

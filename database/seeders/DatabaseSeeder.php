@@ -18,20 +18,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        Note::create(['title' => 'Meeting Notes', 'content' => 'Discuss project milestones and deadlines.']);
-        Note::create(['title' => 'Shopping List', 'content' => 'Buy milk, eggs, bread, and coffee.']);
-        Note::create(['title' => 'Workout Plan', 'content' => 'Monday: Cardio, Tuesday: Strength training.']);
-        Note::create(['title' => 'Recipe Ideas', 'content' => 'Try making lasagna and chocolate cake.']);
-        Note::create(['title' => 'Travel Itinerary', 'content' => 'Visit Paris, Rome, and Barcelona.']);
-        Note::create(['title' => 'Book Recommendations', 'content' => 'Read "1984" by George Orwell and "Dune" by Frank Herbert.']);
-        
-        Note::factory(10)->create();
+        User::factory(3)->create();
+
+        Note::create(['title' => 'User 1: Meeting Notes', 'content' => 'Discuss project milestones and deadlines.', 'user_id' => 1]);
+        Note::create(['title' => 'User 1: Shopping List', 'content' => 'Buy milk, eggs, bread, and coffee.', 'user_id' => 1]);
+        Note::create(['title' => 'User 1: Workout Plan', 'content' => 'Monday: Cardio, Tuesday: Strength training.', 'user_id' => 1]);
+        Note::create(['title' => 'User 2: Recipe Ideas', 'content' => 'Try making lasagna and chocolate cake.', 'user_id' => 2]);
+        Note::create(['title' => 'User 2: Travel Itinerary', 'content' => 'Visit Paris, Rome, and Barcelona.', 'user_id' => 2]);
+        Note::create(['title' => 'User 2: Book Recommendations', 'content' => 'Read "1984" by George Orwell and "Dune" by Frank Herbert.', 'user_id' => 2]);
+        Note::create(['title' => 'User 3: Event Planning', 'content' => 'Organize the annual company picnic.', 'user_id' => 3]);
+        Note::create(['title' => 'User 3: Learning Goals', 'content' => 'Complete online course on web development.', 'user_id' => 3]);
+        Note::create(['title' => 'User 3: Daily Journal', 'content' => 'Reflect on today\'s achievements and challenges.', 'user_id' => 3]);
+        Note::create(['title' => 'User 3: Gift Ideas', 'content' => 'Consider buying a watch or a book for the birthday.', 'user_id' => 3]);
 
         Tag::create(['name' => 'Personal']);
         Tag::create(['name' => 'Work']);

@@ -2,9 +2,10 @@
 
 use App\Models\Note;
 use App\Models\Tag;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-new class extends Component
+new #[Layout('layouts::dashboard')]class extends Component
 {
     public $notes = [];
     public $search = '';

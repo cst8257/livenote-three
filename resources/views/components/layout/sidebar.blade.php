@@ -6,5 +6,4 @@
         name="Livenote 3"
     />
     {{ $slot }}
-    <flux:sidebar.spacer />
 </flux:sidebar>
