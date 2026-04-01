@@ -1,16 +1,36 @@
 <?php
 
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
 {
     public $tags = [];
 
+    #[On('note-updated')]
     public function boot()
     {
         // $this->tags = Tag::all();
-        $this->tags = Tag::withCount('notes')->get();
+        // $this->tags = Tag::withCount('notes')->get();
+        $this->tags = Tag::whereHas('notes', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+            ->withCount(['notes' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])
+            ->get();
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        $this->redirect('/login', true);
     }
 };
 ?>
@@ -30,6 +50,10 @@ new class extends Component
         @endforeach
     </flux:sidebar.nav>
     <flux:sidebar.nav>
-        <flux:sidebar.item icon="arrow-right-start-on-rectangle">Logout</flux:sidebar.item>
+        <flux:sidebar.item 
+            icon="arrow-right-start-on-rectangle" 
+            wire:click="logout">
+            Logout
+        </flux:sidebar.item>
     </flux:sidebar.nav>
 </div>

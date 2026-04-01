@@ -8,6 +8,26 @@ new class extends Component
 {
     public $email = '';
     public $password = '';
+
+    public function login()
+    {
+        $this->validate([
+            'email' => 'required|email'
+        ]);
+
+        $credentials = [
+            'email' => $this->email,
+            'password' => $this->password
+        ];
+
+        if (Auth::attempt($credentials)) {
+         // Authentication was successful
+            return redirect()->intended('/');
+        } else {
+            // Authentication failed
+            $this->addError('password', 'Invalid email or password.');
+        }
+    }
 };
 ?>
 
@@ -18,7 +38,7 @@ new class extends Component
             <div>
                 <flux:heading size="lg">Log in to your account</flux:heading>
             </div>
-            <form>
+            <form wire:submit="login">
                 <div class="space-y-6 mb-8">
                     <flux:input label="Email" type="email" placeholder="Your email address" wire:model="email" />
 

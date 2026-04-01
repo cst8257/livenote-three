@@ -2,6 +2,7 @@
 
 use App\Models\Note;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -14,7 +15,7 @@ new #[Layout('layouts::dashboard')] class extends Component
 
     public function mount($id) 
     {
-       $note = Note::findOrFail($id);
+       $note = Auth::user()->notes()->findOrFail($id);
        $this->id = $note->id;
        $this->title = $note->title;
        $this->content = $note->content;
@@ -27,6 +28,16 @@ new #[Layout('layouts::dashboard')] class extends Component
         $note->title = $this->title;
         $note->content = $this->content;
         $note->save();
+
+        if (!empty($this->tags)) {
+            $tagNames = Tag::parse($this->tags);
+            $tagIds = $tagNames->map(function ($name) {
+                return Tag::firstOrCreate(['name' => $name]);
+            })->pluck('id');
+            $note->tags()->sync($tagIds);
+        }
+
+        $this->dispatch('note-updated');
 
         $this->js('save');
     }

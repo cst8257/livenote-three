@@ -2,34 +2,61 @@
 
 use App\Models\Note;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 new #[Layout('layouts::dashboard')]class extends Component
 {
-    public $notes = [];
+    // public $notes = [];
     public $search = '';
     public $title = '';
+    public $tagId = null;
 
     public function mount($tagId = null)
     {
-        if (is_null($tagId)) {
-            $this->notes = Note::all();
+        $this->tagId = $tagId;
+        if (is_null($this->tagId)) {
+            // $this->notes = Note::all();
+            // $this->notes = Auth::user()->notes;
             $this->title = 'All Notes';
             return;
         }
 
-        $tag = Tag::findOrFail($tagId);
+        $tag = Tag::findOrFail($this->tagId);
         $this->title = $tag->name;
-        $this->notes = $tag->notes;
+        // $this->notes = $tag->notes()->where('user_id', '=', Auth::id())->get();
     }
 
-    public function updatedSearch()
+    #[Computed()]
+    public function notes()
     {
-        $this->notes = Note::where('title', 'LIKE', '%' . $this->search . '%')
-            ->orWhere('content', 'LIKE', '%' . $this->search . '%')
-            ->get();
+        if (is_null($this->tagId)) {
+            return Auth::user()->notes()
+            ->where(function ($query) {
+                $query->where('title', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('content', 'LIKE', '%' . $this->search . '%');
+            })->get();
+        }
+
+        $tag = Tag::findOrFail($this->tagId);
+        return $tag->notes()
+            ->where('user_id', '=', Auth::id())
+            ->where(function ($query) {
+                $query->where('title', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('content', 'LIKE', '%' . $this->search . '%');
+            })->get();
     }
+
+    // public function updatedSearch()
+    // {
+    //     $this->notes = Auth::user()->notes()
+    //         ->where(function ($query) {
+    //             $query->where('title', 'LIKE', '%' . $this->search . '%')
+    //                 ->orWhere('content', 'LIKE', '%' . $this->search . '%');
+    //         })->get();
+    // }
 };
 ?>
 
@@ -50,7 +77,7 @@ new #[Layout('layouts::dashboard')]class extends Component
         <x-elements.title>{{ $title }}</x-elements.title>
 
         <x-layout.grid>
-            @foreach ($notes as $note)
+            @foreach ($this->notes as $note)
             <x-elements.card :id="$note['id']" :title="$note['title']" :content="$note['content']" />
             @endforeach
         </x-layout.grid>
